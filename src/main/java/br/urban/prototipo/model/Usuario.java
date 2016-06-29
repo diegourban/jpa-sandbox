@@ -12,11 +12,11 @@ import javax.persistence.Table;
 public class Usuario {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "cd_usuario")
 	private Long id;
 	
-	@Column(name = "login")
+	@Column(name = "ds_login")
 	private String login;
 		
 	public Long getId() {
