@@ -20,7 +20,7 @@ public class PapelDaoTest {
 	
 	@Before
 	public void beforeTest() {
-		em = new CriadorDeSessao().getEntityManager();
+		em = new CriadorDeEntityManager().getEntityManager();
 		papelDao = new PapelDao(em);
 		em.getTransaction().begin();
 	}
@@ -33,11 +33,12 @@ public class PapelDaoTest {
 	
 	@Test
 	public void deveSalvarPapelNovo() {
+		assertEquals(0, papelDao.total());
 		Papel papel = new Papel();
 		papel.setDescricao("descricao");
 
 		papelDao.salvar(papel);
-		assertEquals(1, papelDao.total().longValue());
+		assertEquals(1, papelDao.total());
 		Optional<Papel> usuarioOptional = papelDao.porDescricao("descricao");
 		assertTrue(usuarioOptional.isPresent());
 		assertEquals("descricao", usuarioOptional.get().getDescricao());

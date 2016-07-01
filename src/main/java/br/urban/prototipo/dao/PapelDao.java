@@ -22,7 +22,7 @@ public class PapelDao {
 		em.persist(papel);
 	}
 
-	public Long total() {
+	public long total() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> query = cb.createQuery(Long.class);
 		Root<Papel> from = query.from(Papel.class);

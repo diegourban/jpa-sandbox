@@ -21,7 +21,7 @@ public class UsuarioDaoTest {
 
 	@Before
 	public void beforeTest() {
-		em = new CriadorDeSessao().getEntityManager();
+		em = new CriadorDeEntityManager().getEntityManager();
 		usuarioDao = new UsuarioDao(em);
 		em.getTransaction().begin();
 	}
@@ -34,11 +34,12 @@ public class UsuarioDaoTest {
 
 	@Test
 	public void deveSalvarUsuarioNovo() {
+		assertEquals(0, usuarioDao.total());
 		Usuario usuario = new Usuario();
 		usuario.setLogin("login");
 
 		usuarioDao.salvar(usuario);
-		assertEquals(1, usuarioDao.total().longValue());
+		assertEquals(1, usuarioDao.total());
 		Optional<Usuario> usuarioOptional = usuarioDao.porLogin("login");
 		assertTrue(usuarioOptional.isPresent());
 		assertEquals("login", usuarioOptional.get().getLogin());
@@ -46,17 +47,19 @@ public class UsuarioDaoTest {
 	
 	@Test
 	public void deveDeletarUmUsuario() {
+		assertEquals(0, usuarioDao.total());
+		
 		Usuario usuario = new Usuario();
 		usuario.setLogin("deletar");
 		
 		usuarioDao.salvar(usuario);
 		
-		assertEquals(1, usuarioDao.total().longValue());
+		assertEquals(1, usuarioDao.total());
 		Optional<Usuario> usuarioParaDeletarOptional = usuarioDao.porLogin("deletar");
 		assertTrue(usuarioParaDeletarOptional.isPresent());
 		usuarioDao.deletar(usuarioParaDeletarOptional.get());
 		
-		assertEquals(0, usuarioDao.total().longValue());
+		assertEquals(0, usuarioDao.total());
 	}
 	
 	@Test
@@ -65,7 +68,7 @@ public class UsuarioDaoTest {
 		
 		usuario.setLogin("alterar");
 		usuarioDao.salvar(usuario);
-		assertEquals(1, usuarioDao.total().longValue());
+		assertEquals(1, usuarioDao.total());
 		
 		Optional<Usuario> usuarioOptional = usuarioDao.porLogin("alterar");
 		assertTrue(usuarioOptional.isPresent());
@@ -77,7 +80,7 @@ public class UsuarioDaoTest {
 		assertFalse(usuarioDao.existemUsuariosComLogin("alterar"));
 		
 		// não deve ter criado outro usuário
-		assertEquals(1, usuarioDao.total().longValue());
+		assertEquals(1, usuarioDao.total());
 		
 		// deve encontrar o alterado
 		usuarioOptional = usuarioDao.porLogin("alterado");

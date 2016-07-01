@@ -31,7 +31,7 @@ public class UsuarioDao {
 		return Optional.of(em.createQuery(query).getSingleResult());
 	}
 
-	public Long total() {
+	public long total() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> query = cb.createQuery(Long.class);
 		Root<Usuario> from = query.from(Usuario.class);

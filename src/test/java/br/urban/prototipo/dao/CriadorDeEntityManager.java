@@ -4,13 +4,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class CriadorDeSessao {
+public class CriadorDeEntityManager {
 
 	private static EntityManagerFactory emf;
 
 	public EntityManager getEntityManager() {
 		if (emf == null) {
-			emf = Persistence.createEntityManagerFactory("hsqldb");
+			emf = Persistence.createEntityManagerFactory("test");
 		}
 
 		return emf.createEntityManager();
