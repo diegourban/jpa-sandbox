@@ -20,6 +20,7 @@ public class PapelDao {
 
 	public void salvar(Papel papel) {
 		em.persist(papel);
+		em.flush();
 	}
 
 	public long total() {

@@ -20,6 +20,7 @@ public class UsuarioDao {
 
 	public void salvar(Usuario usuario) {
 		em.persist(usuario);
+		em.flush();
 	}
 
 	public Optional<Usuario> porLogin(String login) {
