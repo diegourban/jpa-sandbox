@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,14 +17,17 @@ public class Papel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
+	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "descricao")
+	@Column(name = "descricao", nullable = false)
 	private String descricao;
 	
 	@ManyToMany(mappedBy="papeis")
 	private Set<Usuario> usuarios;
+	
+	@OneToOne(mappedBy = "papel")
+	private Usuario usuario;
 
 	public Long getId() {
 		return id;
@@ -39,6 +43,14 @@ public class Papel {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

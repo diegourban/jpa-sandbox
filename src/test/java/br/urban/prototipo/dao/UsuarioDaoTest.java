@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.urban.prototipo.model.Papel;
 import br.urban.prototipo.model.Usuario;
 
 public class UsuarioDaoTest {
@@ -86,6 +87,27 @@ public class UsuarioDaoTest {
 		usuarioOptional = usuarioDao.porLogin("alterado");
 		assertTrue(usuarioOptional.isPresent());
 		assertEquals("alterado", usuario.getLogin());
+	}
+	
+	@Test
+	public void deveSalvarUsuarioComUmPapel() {
+		Papel papel = new Papel();
+		papel.setDescricao("ha");
+		
+		Usuario usuario = new Usuario();
+		usuario.setLogin("login");
+		usuario.setPapel(papel);
+		
+		usuarioDao.salvar(usuario);
+		
+		assertTrue(usuarioDao.existemUsuariosComLogin("login"));
+		
+		assertEquals(1, usuarioDao.total());
+		Optional<Usuario> usuarioOptional = usuarioDao.porLogin("login");
+		assertTrue(usuarioOptional.isPresent());
+		assertEquals("login", usuario.getLogin());
+		
+		assertEquals("ha", usuario.getPapel().getDescricao());
 	}
 
 }

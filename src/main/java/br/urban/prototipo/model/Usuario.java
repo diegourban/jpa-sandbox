@@ -2,6 +2,7 @@ package br.urban.prototipo.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +29,10 @@ public class Usuario {
 	@ManyToMany
     @JoinTable(name="usuario_papel", joinColumns={@JoinColumn(name="usuario_id")}, inverseJoinColumns={@JoinColumn(name="papel_id")})
 	private Set<Papel> papeis;
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "usuario_id")
+	private Papel papel;
 
 	public Long getId() {
 		return id;
@@ -50,6 +56,14 @@ public class Usuario {
 
 	public void setPapeis(Set<Papel> papeis) {
 		this.papeis = papeis;
+	}
+	
+	public Papel getPapel() {
+		return papel;
+	}
+	
+	public void setPapel(Papel papel) {
+		this.papel = papel;
 	}
 
 }
