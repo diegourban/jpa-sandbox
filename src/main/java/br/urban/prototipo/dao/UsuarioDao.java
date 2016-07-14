@@ -22,6 +22,11 @@ public class UsuarioDao {
 		em.persist(usuario);
 		em.flush();
 	}
+	
+	public void deletar(Usuario usuario) {
+		em.remove(usuario);
+		em.flush();
+	}
 
 	public Optional<Usuario> porLogin(String login) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -51,10 +56,6 @@ public class UsuarioDao {
 		query.select(cb.count(from));
 		query.where(cb.equal(from.get(Usuario_.login), login));
 		return em.createQuery(query).getSingleResult();
-	}
-
-	public void deletar(Usuario usuario) {
-		em.remove(usuario);
 	}
 
 }
