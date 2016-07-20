@@ -9,13 +9,12 @@ public class PapelTest {
 
 	@Test
 	public void deveInstanciar() {
-		assertNotNull(new Papel());
+		assertNotNull(new Papel(null));
 	}
 
 	@Test
 	public void deveSetarDescricao() {
-		Papel papel = new Papel();
-		papel.setDescricao("novaDescricao");
+		Papel papel = new Papel("novaDescricao");
 		assertEquals("novaDescricao", papel.getDescricao());
 	}
 

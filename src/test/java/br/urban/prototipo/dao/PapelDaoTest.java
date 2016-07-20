@@ -39,23 +39,26 @@ public class PapelDaoTest {
 	
 	@Test(expected=PapelDaoException.class)
 	public void naoDeveSalvarPapelComDescricaoNull() throws PapelDaoException {
-		Papel p = new Papel();
-		p.setDescricao(null);
+		Papel p = new Papel(null);
 		papelDao.salvar(p);
 	}
 	
 	@Test(expected=PapelDaoException.class)
 	public void naoDeveSalvarPapelComDescricaoVazia() throws PapelDaoException {
-		Papel p = new Papel();
-		p.setDescricao("");
+		Papel p = new Papel("");
+		papelDao.salvar(p);
+	}
+	
+	@Test(expected=PapelDaoException.class)
+	public void naoDeveSalvarPapelComDescricaoComEspaco() throws PapelDaoException {
+		Papel p = new Papel(" ");
 		papelDao.salvar(p);
 	}
 	
 	@Test
 	public void deveSalvarPapelNovo() throws PapelDaoException {
 		assertEquals(0, papelDao.total());
-		Papel papel = new Papel();
-		papel.setDescricao("descricao");
+		Papel papel = new Papel("descricao");
 
 		papelDao.salvar(papel);
 		assertEquals(1, papelDao.total());
@@ -68,8 +71,7 @@ public class PapelDaoTest {
 	public void deveDeletarUmPapel() throws PapelDaoException {
 		assertEquals(0, papelDao.total());
 		
-		Papel papel = new Papel();
-		papel.setDescricao("paradeletar");
+		Papel papel = new Papel("paradeletar");
 		
 		papelDao.salvar(papel);
 		assertEquals(1, papelDao.total());
@@ -93,12 +95,10 @@ public class PapelDaoTest {
 	public void deveListarTodos() throws PapelDaoException {
 		assertEquals(0, papelDao.total());
 		
-		Papel papel = new Papel();
-		papel.setDescricao("papel1");
+		Papel papel = new Papel("papel1");
 		papelDao.salvar(papel);
 		
-		Papel papel2 = new Papel();
-		papel2.setDescricao("papel1");
+		Papel papel2 = new Papel("papel2");
 		papelDao.salvar(papel2);
 		
 		assertEquals(2, papelDao.total());

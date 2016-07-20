@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import br.urban.prototipo.exception.UsuarioDaoException;
 import br.urban.prototipo.model.Usuario;
 import br.urban.prototipo.model.Usuario_;
 
@@ -18,8 +19,13 @@ public class UsuarioDao {
 		this.em = em;
 	}
 
-	public void salvar(Usuario usuario) {
-		em.persist(usuario);
+	public void salvar(Usuario usuario) throws UsuarioDaoException {
+		validarUsuario(usuario);
+		if(usuario.isNew()) {
+			em.persist(usuario);
+		} else {
+			em.merge(usuario);
+		}
 		em.flush();
 	}
 	
@@ -56,6 +62,19 @@ public class UsuarioDao {
 		query.select(cb.count(from));
 		query.where(cb.equal(from.get(Usuario_.login), login));
 		return em.createQuery(query).getSingleResult();
+	}
+	
+	private void validarUsuario(Usuario usuario) throws UsuarioDaoException {
+		if(usuario == null) {
+			throw new UsuarioDaoException("Usuário não pode ser nulo");
+		}
+		validarLogin(usuario.getLogin());
+	}
+
+	private void validarLogin(String login) throws UsuarioDaoException {
+		if(login == null || login.trim().isEmpty()) {
+			throw new UsuarioDaoException("Login é obrigatório");
+		}
 	}
 
 }

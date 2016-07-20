@@ -12,7 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.urban.prototipo.model.Papel;
+import br.urban.prototipo.exception.UsuarioDaoException;
 import br.urban.prototipo.model.Usuario;
 
 public class UsuarioDaoTest {
@@ -32,12 +32,34 @@ public class UsuarioDaoTest {
 		em.getTransaction().rollback();
 		em.close();
 	}
+	
+	@Test(expected=UsuarioDaoException.class)
+	public void naoDeveSalvarNulo() throws UsuarioDaoException {
+		usuarioDao.salvar(null);
+	}
+	
+	@Test(expected=UsuarioDaoException.class)
+	public void naoDeveSalvarUsuarioComLoginNull() throws UsuarioDaoException {
+		Usuario usuario = new Usuario(null);
+		usuarioDao.salvar(usuario);
+	}
+	
+	@Test(expected=UsuarioDaoException.class)
+	public void naoDeveSalvarUsuarioComLoginVazio() throws UsuarioDaoException {
+		Usuario usuario = new Usuario("");
+		usuarioDao.salvar(usuario);
+	}
+	
+	@Test(expected=UsuarioDaoException.class)
+	public void naoDeveSalvarUsuarioComLoginComEspaco() throws UsuarioDaoException {
+		Usuario usuario = new Usuario(" ");
+		usuarioDao.salvar(usuario);
+	}
 
 	@Test
-	public void deveSalvarUsuarioNovo() {
+	public void deveSalvarUsuarioNovo() throws UsuarioDaoException {
 		assertEquals(0, usuarioDao.total());
-		Usuario usuario = new Usuario();
-		usuario.setLogin("login");
+		Usuario usuario = new Usuario("login");
 
 		usuarioDao.salvar(usuario);
 		assertEquals(1, usuarioDao.total());
@@ -47,11 +69,10 @@ public class UsuarioDaoTest {
 	}
 	
 	@Test
-	public void deveDeletarUmUsuario() {
+	public void deveDeletarUmUsuario() throws UsuarioDaoException {
 		assertEquals(0, usuarioDao.total());
 		
-		Usuario usuario = new Usuario();
-		usuario.setLogin("deletar");
+		Usuario usuario = new Usuario("deletar");
 		
 		usuarioDao.salvar(usuario);
 		
@@ -64,10 +85,9 @@ public class UsuarioDaoTest {
 	}
 	
 	@Test
-	public void deveAlterarLogin() {
-		Usuario usuario = new Usuario();
+	public void deveAlterarLogin() throws UsuarioDaoException {
+		Usuario usuario = new Usuario("alterar");
 		
-		usuario.setLogin("alterar");
 		usuarioDao.salvar(usuario);
 		assertEquals(1, usuarioDao.total());
 		
@@ -89,25 +109,4 @@ public class UsuarioDaoTest {
 		assertEquals("alterado", usuario.getLogin());
 	}
 	
-	@Test
-	public void deveSalvarUsuarioComUmPapel() {
-		Papel papel = new Papel();
-		papel.setDescricao("ha");
-		
-		Usuario usuario = new Usuario();
-		usuario.setLogin("login");
-		usuario.setPapel(papel);
-		
-		usuarioDao.salvar(usuario);
-		
-		assertTrue(usuarioDao.existemUsuariosComLogin("login"));
-		
-		assertEquals(1, usuarioDao.total());
-		Optional<Usuario> usuarioOptional = usuarioDao.porLogin("login");
-		assertTrue(usuarioOptional.isPresent());
-		assertEquals("login", usuario.getLogin());
-		
-		assertEquals("ha", usuario.getPapel().getDescricao());
-	}
-
 }

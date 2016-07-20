@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,9 +25,10 @@ public class Papel {
 	@ManyToMany(mappedBy="papeis")
 	private Set<Usuario> usuarios;
 	
-	@OneToOne(mappedBy = "papel")
-	private Usuario usuario;
-
+	public Papel(String descricao) {
+		this.descricao = descricao;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -43,14 +43,6 @@ public class Papel {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-	
-	public Usuario getUsuario() {
-		return usuario;
-	}
-	
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 }

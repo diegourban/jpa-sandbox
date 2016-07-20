@@ -11,13 +11,12 @@ public class UsuarioTest {
 	
 	@Test
 	public void deveInstanciar() {
-		assertNotNull(new Usuario());
+		assertNotNull(new Usuario(null));
 	}
 	
 	@Test
 	public void deveSetarLogin() {
-		Usuario usuario = new Usuario();
-		usuario.setLogin("novoLogin");
+		Usuario usuario = new Usuario("novoLogin");
 		assertEquals("novoLogin", usuario.getLogin());
 	}
 
