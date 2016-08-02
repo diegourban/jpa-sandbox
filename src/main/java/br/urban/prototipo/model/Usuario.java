@@ -27,15 +27,16 @@ public class Usuario {
 	@Column(name = "login", nullable = false)
 	private String login;
 
-	@ManyToMany(cascade = {CascadeType.PERSIST})
-    @JoinTable(name="usuario_papel", joinColumns={@JoinColumn(name="usuario_id")}, inverseJoinColumns={@JoinColumn(name="papel_id")})
+	@ManyToMany(cascade = { CascadeType.PERSIST })
+	@JoinTable(name = "usuario_papel", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "papel_id") })
 	private Set<Papel> papeis;
-	
+
 	public Usuario(String login) {
 		this.login = login;
 		this.papeis = new HashSet<>();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -55,25 +56,66 @@ public class Usuario {
 	public Set<Papel> getPapeis() {
 		return Collections.unmodifiableSet(papeis);
 	}
-	
+
 	public int getQuantidadePapeis() {
 		return papeis.size();
 	}
-	
+
 	public boolean possui(Papel papel) {
 		return this.papeis.contains(papel);
 	}
 
 	public void adiciona(Papel papel) {
-		this.papeis.add(papel);
+		if(!possui(papel)) {
+			this.papeis.add(papel);
+		}
 	}
-	
+
 	public void remove(Papel papel) {
-		this.papeis.remove(papel);
+		if(possui(papel)) {
+			this.papeis.remove(papel);
+		}
 	}
-	
+
 	public boolean isNew() {
 		return this.id == null;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((papeis == null) ? 0 : papeis.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (login == null) {
+			if (other.login != null)
+				return false;
+		} else if (!login.equals(other.login))
+			return false;
+		if (papeis == null) {
+			if (other.papeis != null)
+				return false;
+		} else if (!papeis.equals(other.papeis))
+			return false;
+		return true;
+	}
+
 }

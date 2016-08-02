@@ -64,5 +64,17 @@ public class UsuarioTest {
 		boolean possui = usuario.possui(papelNaoAdicionado);
 		assertEquals(false, possui);
 	}
+	
+	@Test
+	public void naoDeveAdicionarPapelDuplicado() {
+		Usuario usuario = new Usuario("login");
+		Papel papel = new Papel("USUARIO");
+		assertEquals(0, usuario.getQuantidadePapeis());
+		usuario.adiciona(papel);
+		assertEquals(1, usuario.getQuantidadePapeis());
+		
+		usuario.adiciona(papel); // duplicado
+		assertEquals(1, usuario.getQuantidadePapeis());
+	}
 
 }
