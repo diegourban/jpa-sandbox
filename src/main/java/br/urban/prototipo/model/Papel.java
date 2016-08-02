@@ -1,5 +1,6 @@
 package br.urban.prototipo.model;
 
+import java.util.Collections;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -21,14 +22,14 @@ public class Papel {
 
 	@Column(name = "descricao", nullable = false)
 	private String descricao;
-	
-	@ManyToMany(mappedBy="papeis")
+
+	@ManyToMany(mappedBy = "papeis")
 	private Set<Usuario> usuarios;
-	
+
 	public Papel(String descricao) {
 		this.descricao = descricao;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -43,6 +44,10 @@ public class Papel {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Set<Usuario> getUsuarios() {
+		return Collections.unmodifiableSet(usuarios);
 	}
 
 }

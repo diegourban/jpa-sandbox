@@ -13,17 +13,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.urban.prototipo.exception.UsuarioDaoException;
+import br.urban.prototipo.model.Papel;
 import br.urban.prototipo.model.Usuario;
 
 public class UsuarioDaoTest {
 
 	private EntityManager em;
 	private UsuarioDao usuarioDao;
+	private PapelDao papelDao;
 
 	@Before
 	public void beforeTest() {
 		em = new CriadorDeEntityManager().getEntityManager();
 		usuarioDao = new UsuarioDao(em);
+		papelDao = new PapelDao(em);
 		em.getTransaction().begin();
 	}
 
@@ -107,6 +110,45 @@ public class UsuarioDaoTest {
 		usuarioOptional = usuarioDao.porLogin("alterado");
 		assertTrue(usuarioOptional.isPresent());
 		assertEquals("alterado", usuario.getLogin());
+	}
+	
+	@Test
+	public void deveSalvarUsuarioComUmPapel() throws UsuarioDaoException {
+		assertEquals(0, usuarioDao.total());
+		assertEquals(0, papelDao.total());
+		
+		Usuario usuario = new Usuario("login");
+		Papel papel = new Papel("papel");
+		usuario.adiciona(papel);
+		
+		usuarioDao.salvar(usuario);
+		assertEquals(1, usuarioDao.total());
+		assertEquals(1, papelDao.total());
+		
+		Optional<Usuario> usuarioOptional = usuarioDao.porLogin("login");
+		assertEquals(true, usuarioOptional.isPresent());
+		assertEquals(1, usuarioOptional.get().getQuantidadePapeis());
+		
+	}
+	
+	@Test
+	public void deveSalvarUsuarioComPapeis() throws UsuarioDaoException {
+		assertEquals(0, usuarioDao.total());
+		assertEquals(0, papelDao.total());
+		
+		Usuario usuario = new Usuario("login");
+		Papel papel1 = new Papel("papel1");
+		Papel papel2 = new Papel("papel2");
+		usuario.adiciona(papel1);
+		usuario.adiciona(papel2);
+		
+		usuarioDao.salvar(usuario);
+		assertEquals(1, usuarioDao.total());
+		assertEquals(2, papelDao.total());
+		
+		Optional<Usuario> usuarioOptional = usuarioDao.porLogin("login");
+		assertEquals(true, usuarioOptional.isPresent());
+		assertEquals(2, usuarioOptional.get().getQuantidadePapeis());
 	}
 	
 }

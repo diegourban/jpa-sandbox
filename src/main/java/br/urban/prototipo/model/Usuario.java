@@ -1,7 +1,10 @@
 package br.urban.prototipo.model;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,12 +27,13 @@ public class Usuario {
 	@Column(name = "login", nullable = false)
 	private String login;
 
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST})
     @JoinTable(name="usuario_papel", joinColumns={@JoinColumn(name="usuario_id")}, inverseJoinColumns={@JoinColumn(name="papel_id")})
 	private Set<Papel> papeis;
 	
 	public Usuario(String login) {
 		this.login = login;
+		this.papeis = new HashSet<>();
 	}
 	
 	public Long getId() {
@@ -49,11 +53,23 @@ public class Usuario {
 	}
 
 	public Set<Papel> getPapeis() {
-		return papeis;
+		return Collections.unmodifiableSet(papeis);
+	}
+	
+	public int getQuantidadePapeis() {
+		return papeis.size();
+	}
+	
+	public boolean possui(Papel papel) {
+		return this.papeis.contains(papel);
 	}
 
-	public void setPapeis(Set<Papel> papeis) {
-		this.papeis = papeis;
+	public void adiciona(Papel papel) {
+		this.papeis.add(papel);
+	}
+	
+	public void remove(Papel papel) {
+		this.papeis.remove(papel);
 	}
 	
 	public boolean isNew() {
