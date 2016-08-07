@@ -10,7 +10,7 @@ public class CriadorDeEntityManager {
 
 	public EntityManager getEntityManager() {
 		if (emf == null) {
-			emf = Persistence.createEntityManagerFactory("test");
+			emf = Persistence.createEntityManagerFactory("jpa-sandbox-hsqldb");
 		}
 
 		return emf.createEntityManager();
