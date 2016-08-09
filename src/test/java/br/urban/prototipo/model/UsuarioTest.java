@@ -7,42 +7,31 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.urban.prototipo.builder.PapelBuilder;
-import br.urban.prototipo.builder.UsuarioBuilder;
-import br.urban.prototipo.model.Usuario;
-
 public class UsuarioTest {
-	
-	private UsuarioBuilder usuarioBuilder;
-	private PapelBuilder papelBuilder;
 	
 	@Before
 	public void beforeTest() {
-		this.usuarioBuilder = new UsuarioBuilder();
-		this.papelBuilder = new PapelBuilder();
 	}
 	
 	@After
 	public void afterTest() {
-		this.usuarioBuilder = null;
-		this.papelBuilder = null;
 	}
 	
 	@Test
 	public void deveInstanciar() {
-		assertNotNull(usuarioBuilder.build());
+		assertNotNull(new Usuario.UsuarioBuilder().build());
 	}
 	
 	@Test
 	public void deveSetarLogin() {
-		Usuario usuario = usuarioBuilder.comLogin("root").build();
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("root").build();
 		assertEquals("root", usuario.getLogin());
 	}
 	
 	@Test
 	public void deveAdicionarPapel() {
-		Usuario usuario = usuarioBuilder.comLogin("root").build();
-		Papel papel = papelBuilder.comDescricao("admin").build();
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("root").build();
+		Papel papel = new Papel.PapelBuilder().comDescricao("admin").build();
 		assertEquals(0, usuario.getQuantidadePapeis());
 		usuario.adiciona(papel);
 		assertEquals(1, usuario.getQuantidadePapeis());
@@ -50,8 +39,8 @@ public class UsuarioTest {
 	
 	@Test
 	public void deveRemoverPapel() {
-		Usuario usuario = usuarioBuilder.comLogin("root").build();
-		Papel papel = papelBuilder.comDescricao("admin").build();
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("root").build();
+		Papel papel = new Papel.PapelBuilder().comDescricao("admin").build();
 		assertEquals(0, usuario.getQuantidadePapeis());
 		usuario.adiciona(papel);
 		assertEquals(1, usuario.getQuantidadePapeis());
@@ -61,8 +50,8 @@ public class UsuarioTest {
 	
 	@Test
 	public void devePossuirPapelAdicionar() {
-		Usuario usuario = usuarioBuilder.comLogin("root").build();
-		Papel papel = papelBuilder.comDescricao("admin").build();
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("root").build();
+		Papel papel = new Papel.PapelBuilder().comDescricao("admin").build();
 		assertEquals(0, usuario.getQuantidadePapeis());
 		usuario.adiciona(papel);
 		assertEquals(1, usuario.getQuantidadePapeis());
@@ -72,8 +61,8 @@ public class UsuarioTest {
 	
 	@Test
 	public void naoDevePossuirPapelNaoAdicionado() {
-		Usuario usuario = usuarioBuilder.comLogin("root").build();
-		Papel papel = papelBuilder.comDescricao("admin").build();
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("root").build();
+		Papel papel =new Papel.PapelBuilder().comDescricao("admin").build();
 		assertEquals(0, usuario.getQuantidadePapeis());
 		usuario.adiciona(papel);
 		assertEquals(1, usuario.getQuantidadePapeis());
@@ -86,8 +75,8 @@ public class UsuarioTest {
 	
 	@Test
 	public void naoDeveAdicionarPapelDuplicado() {
-		Usuario usuario = usuarioBuilder.comLogin("root").build();
-		Papel papel = papelBuilder.comDescricao("admin").build();
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("root").build();
+		Papel papel = new Papel.PapelBuilder().comDescricao("admin").build();
 		assertEquals(0, usuario.getQuantidadePapeis());
 		usuario.adiciona(papel);
 		assertEquals(1, usuario.getQuantidadePapeis());

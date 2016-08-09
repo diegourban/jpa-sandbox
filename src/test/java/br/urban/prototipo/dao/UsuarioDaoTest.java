@@ -43,26 +43,26 @@ public class UsuarioDaoTest {
 	
 	@Test(expected=UsuarioDaoException.class)
 	public void naoDeveSalvarUsuarioComLoginNull() throws UsuarioDaoException {
-		Usuario usuario = new Usuario(null);
+		Usuario usuario = new Usuario.UsuarioBuilder().build();
 		usuarioDao.salvar(usuario);
 	}
 	
 	@Test(expected=UsuarioDaoException.class)
 	public void naoDeveSalvarUsuarioComLoginVazio() throws UsuarioDaoException {
-		Usuario usuario = new Usuario("");
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("").build();
 		usuarioDao.salvar(usuario);
 	}
 	
 	@Test(expected=UsuarioDaoException.class)
 	public void naoDeveSalvarUsuarioComLoginComEspaco() throws UsuarioDaoException {
-		Usuario usuario = new Usuario(" ");
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin(" ").build();
 		usuarioDao.salvar(usuario);
 	}
 
 	@Test
 	public void deveSalvarUsuarioNovo() throws UsuarioDaoException {
 		assertEquals(0, usuarioDao.total());
-		Usuario usuario = new Usuario("login");
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("login").build();
 
 		usuarioDao.salvar(usuario);
 		assertEquals(1, usuarioDao.total());
@@ -75,7 +75,7 @@ public class UsuarioDaoTest {
 	public void deveDeletarUmUsuario() throws UsuarioDaoException {
 		assertEquals(0, usuarioDao.total());
 		
-		Usuario usuario = new Usuario("deletar");
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("deletar").build();
 		
 		usuarioDao.salvar(usuario);
 		
@@ -89,7 +89,7 @@ public class UsuarioDaoTest {
 	
 	@Test
 	public void deveAlterarLogin() throws UsuarioDaoException {
-		Usuario usuario = new Usuario("alterar");
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("alterar").build();
 		
 		usuarioDao.salvar(usuario);
 		assertEquals(1, usuarioDao.total());
@@ -117,8 +117,8 @@ public class UsuarioDaoTest {
 		assertEquals(0, usuarioDao.total());
 		assertEquals(0, papelDao.total());
 		
-		Usuario usuario = new Usuario("login");
-		Papel papel = new Papel("papel");
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("login").build();
+		Papel papel = new Papel.PapelBuilder().comDescricao("papel").build();
 		usuario.adiciona(papel);
 		
 		usuarioDao.salvar(usuario);
@@ -136,9 +136,9 @@ public class UsuarioDaoTest {
 		assertEquals(0, usuarioDao.total());
 		assertEquals(0, papelDao.total());
 		
-		Usuario usuario = new Usuario("login");
-		Papel papel1 = new Papel("papel1");
-		Papel papel2 = new Papel("papel2");
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("login").build();
+		Papel papel1 = new Papel.PapelBuilder().comDescricao("papel1").build();
+		Papel papel2 = new Papel.PapelBuilder().comDescricao("papel2").build();
 		usuario.adiciona(papel1);
 		usuario.adiciona(papel2);
 		

@@ -36,6 +36,11 @@ public class Usuario {
 		this.login = login;
 		this.papeis = new HashSet<>();
 	}
+	
+	private Usuario(UsuarioBuilder builder) {
+		this.login = builder.login;
+		this.papeis = builder.papeis;
+	}
 
 	public Long getId() {
 		return id;
@@ -116,6 +121,32 @@ public class Usuario {
 		} else if (!papeis.equals(other.papeis))
 			return false;
 		return true;
+	}
+	
+	public static class UsuarioBuilder {
+
+		private String login;
+		
+		private Set<Papel> papeis;
+		
+		public UsuarioBuilder() {
+			this.login = null;
+			this.papeis = new HashSet<>();
+		}
+		
+		public UsuarioBuilder comLogin(String login) {
+			this.login = login;
+			return this;
+		}
+		
+		public UsuarioBuilder adicionaPapel(Papel papel) {
+			this.papeis.add(papel);
+			return this;
+		}
+			
+		public Usuario build() {
+			return new Usuario(this);
+		}
 	}
 
 }

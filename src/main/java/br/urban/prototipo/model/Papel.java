@@ -30,6 +30,10 @@ public class Papel {
 		this.descricao = descricao;
 	}
 
+	private Papel(PapelBuilder builder) {
+		this.descricao = builder.descricao;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -85,6 +89,25 @@ public class Papel {
 		} else if (!usuarios.equals(other.usuarios))
 			return false;
 		return true;
+	}
+
+	public static class PapelBuilder {
+
+		private String descricao;
+
+		public PapelBuilder() {
+			this.descricao = null;
+		}
+
+		public PapelBuilder comDescricao(String descricao) {
+			this.descricao = descricao;
+			return this;
+		}
+
+		public Papel build() {
+			return new Papel(this);
+		}
+
 	}
 
 }
