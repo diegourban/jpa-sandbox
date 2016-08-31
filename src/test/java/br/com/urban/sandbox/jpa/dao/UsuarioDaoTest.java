@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import br.com.urban.sandbox.jpa.exception.UsuarioDaoException;
 import br.com.urban.sandbox.jpa.model.Papel;
+import br.com.urban.sandbox.jpa.model.Tipo;
 import br.com.urban.sandbox.jpa.model.Usuario;
 
 public class UsuarioDaoTest {
@@ -148,4 +149,30 @@ public class UsuarioDaoTest {
 		assertEquals(2, usuarioOptional.get().getQuantidadePapeis());
 	}
 	
+	@Test
+	public void deveSalvarUsuarioComTipo() throws UsuarioDaoException {
+		assertEquals(0, usuarioDao.total());
+		
+		Usuario usuario = new Usuario.UsuarioBuilder().comLogin("login").build();
+		usuario.adiciona(Tipo.TIPO1);
+		usuario.adiciona(Tipo.TIPO2);
+		usuarioDao.salvar(usuario);
+		assertEquals(1, usuarioDao.total());
+		
+		Usuario usuario2 = new Usuario.UsuarioBuilder().comLogin("login2").build();
+		usuario2.adiciona(Tipo.TIPO1);
+		usuarioDao.salvar(usuario2);
+		assertEquals(2, usuarioDao.total());
+		
+		Optional<Usuario> usuarioOptional = usuarioDao.porLogin("login");
+		assertTrue(usuarioOptional.isPresent());
+		assertEquals("login", usuarioOptional.get().getLogin());
+		System.out.println(usuarioOptional.get().getTipos());
+		
+		Optional<Usuario> usuarioOptional2 = usuarioDao.porLogin("login2");
+		assertTrue(usuarioOptional2.isPresent());
+		assertEquals("login2", usuarioOptional2.get().getLogin());
+		System.out.println(usuarioOptional2.get().getTipos());
+	}
+		
 }
