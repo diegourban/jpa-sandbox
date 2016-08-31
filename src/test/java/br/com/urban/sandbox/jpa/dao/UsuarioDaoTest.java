@@ -100,13 +100,10 @@ public class UsuarioDaoTest {
 		usuario.setLogin("alterado");
 		usuarioDao.salvar(usuario);
 		
-		// n�o deve encontrar o antigo
 		assertFalse(usuarioDao.existemUsuariosComLogin("alterar"));
 		
-		// n�o deve ter criado outro usu�rio
 		assertEquals(1, usuarioDao.total());
 		
-		// deve encontrar o alterado
 		usuarioOptional = usuarioDao.porLogin("alterado");
 		assertTrue(usuarioOptional.isPresent());
 		assertEquals("alterado", usuario.getLogin());
