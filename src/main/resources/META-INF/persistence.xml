@@ -11,6 +11,9 @@
 		<!-- mapped entities -->
 		<class>br.com.urban.sandbox.jpa.model.Usuario</class>
 		<class>br.com.urban.sandbox.jpa.model.Papel</class>
+		<class>br.com.urban.sandbox.jpa.model.Categoria</class>
+		<class>br.com.urban.sandbox.jpa.model.Loja</class>
+		<class>br.com.urban.sandbox.jpa.model.Produto</class>
 
 		<properties>
 			<!-- connections data -->

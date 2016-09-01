@@ -1,18 +1,12 @@
 package br.com.urban.sandbox.jpa.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,13 +31,7 @@ public class Usuario {
 	@JoinTable(name = "usuario_papel", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "papel_id") })
 	private Set<Papel> papeis;
-	
-	@Enumerated(EnumType.STRING)
-	@ElementCollection(targetClass = Tipo.class) 
-	@CollectionTable(name = "usuario_tipo", joinColumns = @JoinColumn(name = "usuario_id"))
-	@Column(name = "tipo_id")
-	private List<Tipo> tipos = new ArrayList<Tipo>();;
-	
+		
 	public Usuario() {
 		
 	}
@@ -51,7 +39,6 @@ public class Usuario {
 	public Usuario(String login) {
 		this.login = login;
 		this.papeis = new HashSet<>();
-		this.tipos = new ArrayList<Tipo>();
 	}
 	
 	private Usuario(UsuarioBuilder builder) {
@@ -97,16 +84,6 @@ public class Usuario {
 		if(possui(papel)) {
 			this.papeis.remove(papel);
 		}
-	}
-	
-	public void adiciona(Tipo tipo) {
-		if(!this.tipos.contains(tipo)) {
-			this.tipos.add(tipo);
-		}
-	}
-	
-	public List<Tipo> getTipos() {
-		return Collections.unmodifiableList(tipos);
 	}
 
 	public boolean isNew() {
