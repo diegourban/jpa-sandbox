@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,11 +16,19 @@ import br.com.urban.sandbox.jpa.model.Produto;
 
 public class ProdutoDao {
 
-	@PersistenceContext
 	private EntityManager em;
+
+	public ProdutoDao(EntityManager em) {
+		this.em = em;
+	}
 
 	public List<Produto> getProdutos() {
 		return em.createQuery("from Produto", Produto.class).getResultList();
+	}
+
+	public List<Produto> getProdutosComCategorias() {
+		return em.createQuery("select distinct p from Produto p", Produto.class)
+				.setHint("javax.persistence.loadgraph", em.getEntityGraph("produtoComCategoria")).getResultList();
 	}
 
 	public Produto getProduto(Integer id) {

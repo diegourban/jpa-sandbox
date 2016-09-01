@@ -2,17 +2,13 @@ package br.com.urban.sandbox.jpa;
 
 import javax.persistence.EntityManager;
 
-import br.com.urban.sandbox.jpa.dao.CriadorDeEntityManager;
 import br.com.urban.sandbox.jpa.model.Categoria;
 import br.com.urban.sandbox.jpa.model.Loja;
 import br.com.urban.sandbox.jpa.model.Produto;
 
 public class CriadorDeProdutos {
 
-	public static void main(String[] args) {
-		CriadorDeEntityManager criadorDeEntityManager = new CriadorDeEntityManager();
-		EntityManager em = criadorDeEntityManager.getEntityManager();
-		
+	public static void criarProdutos(EntityManager em) {
 		Loja casaDoCodigo = new Loja();
 		casaDoCodigo.setNome("Casa do Código");
 
@@ -45,13 +41,7 @@ public class CriadorDeProdutos {
 		livroDeArquitetura.setLoja(casaDoCodigo);
 		livroDeArquitetura.setPreco(30.0);
 		livroDeArquitetura.adicionarCategorias(tecnologia);
-		livroDeArquitetura.setDescricao("Neste livro, os autores, conhecidos especialistas da "
-				+ " área, apresentam muitos tópicos que aparecem com frequência"
-				+ " na plataforma Java, incluindo desde modelagem e design das "
-				+ "classes, até detalhes importantes das tecnologias mais utilizadas."
-				+ "  Sempre com uma visão técnica e prática capaz de elucidar muitas "
-				+ "questões enfrentadas tanto pelo profissional iniciante quanto por "
-				+ "aquele que está adquirindo mais experiência na plataforma.");
+		livroDeArquitetura.setDescricao("Neste livro, os autores, conhecidos especialistas da...");
 
 		livroDeArquitetura.setLinkDaFoto("http://www.arquiteturajava.com.br/img/capa-livro.png");
 
@@ -62,11 +52,7 @@ public class CriadorDeProdutos {
 		livroDeSpring.setLoja(casaDoCodigo);
 		livroDeSpring.setPreco(30.0);
 		livroDeSpring.adicionarCategorias(tecnologia);
-		livroDeSpring.setDescricao("Criado para simplificar o desenvolvimento de aplicações Java, "
-				+ "o Spring se tornou um dos frameworks de mais destaque dentro desse grande ambiente.  "
-				+ "Aprenda muito mais que o básico do Spring, desde o tradicional Container de Inversão "
-				+ "de Controle e Injeção de Dependências, passando pelos robustos módulos de segurança, "
-				+ "transações, programação orientada a aspectos e também o fantástico módulo MVC, o SpringMVC.");
+		livroDeSpring.setDescricao("Criado para simplificar o desenvolvimento de aplicações Java...");
 
 		livroDeSpring.setLinkDaFoto(
 				"http://cdn.shopify.com/s/files/1/0155/7645/products/spring-framework-featured_large.png?v=1411567960");

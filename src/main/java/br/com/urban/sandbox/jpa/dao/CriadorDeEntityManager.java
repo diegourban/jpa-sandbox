@@ -16,8 +16,4 @@ public class CriadorDeEntityManager {
 		return emf.createEntityManager();
 	}
 	
-	public static void main(String[] args) {
-		new CriadorDeEntityManager().getEntityManager();
-	}
-
 }
