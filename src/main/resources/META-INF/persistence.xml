@@ -25,8 +25,12 @@
 			<!-- hibernate properties -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
 			<property name="hibernate.show_sql" value="true" />
-			
 			<property name="hibernate.hbm2ddl.auto" value="create" />
+			
+			<!-- Enables/disabled hibernate second level cache -->
+			<property name="hibernate.cache.use_second_level_cache" value="true" />	<!-- second level cache for entities with @Cache  -->
+			<property name="hibernate.cache.use_query_cache" value="true" /> <!-- second level cache for queries with hint -->
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" />
 		</properties>
 	</persistence-unit>
 </persistence>

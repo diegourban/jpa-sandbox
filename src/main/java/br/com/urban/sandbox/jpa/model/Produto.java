@@ -15,9 +15,13 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @NamedEntityGraphs({
 		@NamedEntityGraph(name = "produtoComCategoria", attributeNodes = { @NamedAttributeNode("categorias") }) })
 @Entity
+@Cache(usage=CacheConcurrencyStrategy.READ_ONLY) // READ_ONLY is the simplest cache strategy because it does not need any lock control
 public class Produto {
 
 	@Id

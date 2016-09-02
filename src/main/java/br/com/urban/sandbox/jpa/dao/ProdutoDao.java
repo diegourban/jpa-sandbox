@@ -67,6 +67,7 @@ public class ProdutoDao {
 
 		TypedQuery<Produto> typedQuery = em.createQuery(query);
 
+		typedQuery.setHint("org.hibernate.cacheable", "true"); // query cache
 		return typedQuery.getResultList();
 
 	}
