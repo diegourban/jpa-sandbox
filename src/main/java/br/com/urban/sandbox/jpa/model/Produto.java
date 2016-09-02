@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
+import javax.persistence.Version;
 
 @NamedEntityGraphs({
 		@NamedEntityGraph(name = "produtoComCategoria", attributeNodes = { @NamedAttributeNode("categorias") }) })
@@ -20,7 +21,7 @@ import javax.persistence.NamedEntityGraphs;
 public class Produto {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String nome;
@@ -37,6 +38,9 @@ public class Produto {
 
 	@ManyToOne
 	private Loja loja;
+	
+	@Version
+	private Integer versao;
 
 	public String getDescricao() {
 		return descricao;
@@ -98,6 +102,14 @@ public class Produto {
 
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
+	}
+	
+	public Integer getVersao() {
+		return versao;
+	}
+	
+	public void setVersao(Integer versao) {
+		this.versao = versao;
 	}
 
 }

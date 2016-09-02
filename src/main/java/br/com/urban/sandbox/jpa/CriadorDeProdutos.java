@@ -26,6 +26,7 @@ public class CriadorDeProdutos {
 		em.persist(musica);
 
 		Produto cursoDeViolao = new Produto();
+		cursoDeViolao.setId(1);
 		cursoDeViolao.setNome("Curso de Violão");
 		cursoDeViolao.setLoja(musicalAlegre);
 		cursoDeViolao.setPreco(49.0);
