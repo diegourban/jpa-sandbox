@@ -1,7 +1,6 @@
 package br.com.urban.sandbox.jpa;
 
 import javax.persistence.EntityManager;
-import javax.persistence.OptimisticLockException;
 
 import br.com.urban.sandbox.jpa.dao.CriadorDeEntityManager;
 import br.com.urban.sandbox.jpa.model.Produto;
