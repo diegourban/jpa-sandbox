@@ -1,6 +1,6 @@
 package urban.sandbox.jpa.dao;
 
-import br.com.urban.sandbox.jpa.model.Categoria;
+import urban.sandbox.jpa.model.Categoria;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

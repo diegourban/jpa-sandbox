@@ -1,6 +1,6 @@
 package urban.sandbox.jpa.dao;
 
-import br.com.urban.sandbox.jpa.model.Loja;
+import urban.sandbox.jpa.model.Loja;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +12,7 @@ public class LojaDao {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public List<Loja> getLojas() { 
+	public List<Loja> getLojas() {
 		TypedQuery<Loja> query = em.createQuery("from Loja", Loja.class);
 		
 		return query.getResultList();
