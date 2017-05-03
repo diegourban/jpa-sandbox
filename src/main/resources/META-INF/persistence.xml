@@ -30,6 +30,7 @@
 
         <!--  Aqui são listadas todas as entidades  -->
         <class>urban.sandbox.jpa.modelo.Conta</class>
+        <class>urban.sandbox.jpa.modelo.Movimentacao</class>
 
         <properties>
             <!--  Propriedades JDBC  -->
@@ -45,12 +46,12 @@
             <property name="hibernate.format_sql" value="true"/>
 
             <!-- Enables/disabled hibernate second level cache -->
-            <property name="hibernate.cache.use_second_level_cache" value="true" />	<!-- second level cache for entities with @Cache  -->
-            <property name="hibernate.cache.use_query_cache" value="true" /> <!-- second level cache for queries with hint -->
+            <property name="hibernate.cache.use_second_level_cache" value="false" />	<!-- second level cache for entities with @Cache  -->
+            <property name="hibernate.cache.use_query_cache" value="false" /> <!-- second level cache for queries with hint -->
             <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" />
 
             <!-- Statistics -->
-            <property name="hibernate.generate_statistics" value="true" />
+            <property name="hibernate.generate_statistics" value="false" />
         </properties>
     </persistence-unit>
 
