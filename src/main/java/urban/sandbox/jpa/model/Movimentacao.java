@@ -3,6 +3,7 @@ package urban.sandbox.jpa.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 public class Movimentacao {
@@ -23,6 +24,9 @@ public class Movimentacao {
 
     @ManyToOne
     private Conta conta;
+
+    @ManyToMany
+    private List<Categoria> categorias;
 
     public Integer getId() {
         return id;
@@ -70,5 +74,9 @@ public class Movimentacao {
 
     public void setConta(Conta conta) {
         this.conta = conta;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 }
