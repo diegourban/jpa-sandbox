@@ -1,9 +1,7 @@
 package urban.sandbox.jpa.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Conta {
@@ -15,6 +13,9 @@ public class Conta {
     private String numero;
     private String banco;
     private String agencia;
+
+    @OneToMany(mappedBy = "conta")
+    private List<Movimentacao> movimentacoes;
 
     public Integer getId() {
         return id;
@@ -54,5 +55,9 @@ public class Conta {
 
     public void setAgencia(String agencia) {
         this.agencia = agencia;
+    }
+
+    public List<Movimentacao> getMovimentacoes() {
+        return movimentacoes;
     }
 }
