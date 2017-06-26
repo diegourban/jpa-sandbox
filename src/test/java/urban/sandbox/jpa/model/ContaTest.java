@@ -86,8 +86,7 @@ public class ContaTest {
         conta.setTitular("xpto"); // está sincronizada com banco, portanto, qualquer alteração reflete no BD
         em.getTransaction().commit();
 
-        assertEquals("Maria dos Santos", conta.getTitular());
-
+        assertEquals("xpto", conta.getTitular());
         em.close();
     }
 

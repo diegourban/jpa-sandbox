@@ -42,7 +42,7 @@ public class MovimentacaoTest {
         movimentacao2.setTipo(TipoMovimentacao.SAIDA);
         movimentacao2.setValor(new BigDecimal("300.00"));
         movimentacao2.setCategorias(Arrays.asList(categoria1, categoria2));
-        movimentacao1.setConta(conta);
+        movimentacao2.setConta(conta);
 
         em.persist(conta);
         em.persist(categoria1);
@@ -99,4 +99,5 @@ public class MovimentacaoTest {
         em.getTransaction().commit();
         em.close();
     }
+
 }
